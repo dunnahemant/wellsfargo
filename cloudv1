@@ -1,1 +1,18 @@
-Welcome
+public with sharing class WebToCaseControllerv {
+        @AuraEnabled
+        public static String createCase(String contactName, String email, String subject, String description) {
+            try {
+                Case newCase = new Case(
+                    Contact_Email__c = email,  // Custom field for storing Email
+                    Subject = subject,
+                    Description = description,
+                    Origin = 'Web',  // Marking as Web-to-Case
+                    Status = 'New'  // Default case status
+                );
+                insert newCase;
+                return 'Success';
+            } catch (Exception e) {
+                return 'Error: ' + e.getMessage();
+            }
+        }
+}
